@@ -1,4 +1,6 @@
 # go-graphql-tutorial
+
+[![CircleCI](https://circleci.com/gh/jrgriffiniii/go-graphql-tutorial/tree/main.svg?style=svg)](https://circleci.com/gh/jrgriffiniii/go-graphql-tutorial/tree/main)
 A GraphQL API tutorial implemented using Go
 
 ## Getting Started
