@@ -1,4 +1,4 @@
-module github.com/jrgriffiniii/hackernews
+module github.com/jrgriffiniii/go-graphql-tutorial
 
 go 1.18
 
