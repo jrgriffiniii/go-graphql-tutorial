@@ -35,4 +35,31 @@ query {
 }
 ```
 
+#### Mutations
+
+One example mutation would be:
+
+```bash
+mutation CreateTodo($input: NewTodo!) {
+  createTodo(input: $input) {
+    id,
+    text,
+    user{
+      id,
+      name
+    }
+  }
+}
+```
+
+...with the variables being the following:
+
+```bash
+{
+  "input": {
+    "text": "new todo",
+    "userId": "user-id"
+  }
+}
+```
 
