@@ -6,8 +6,8 @@ package graph
 import (
 	"context"
 
-	"github.com/jrgriffiniii/hackernews/graph/generated"
-	"github.com/jrgriffiniii/hackernews/graph/model"
+	"github.com/jrgriffiniii/go-graphql-tutorial/graph/generated"
+	"github.com/jrgriffiniii/go-graphql-tutorial/graph/model"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {

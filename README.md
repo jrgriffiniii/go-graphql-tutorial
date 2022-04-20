@@ -9,6 +9,20 @@ $ go get .
 
 ## Development
 
+### Lint the source code files
+
+```bash
+$ curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.45.2
+$ $(go env GOPATH)/bin/golangci-lint
+```
+
+### Executing the Test Suite
+
+```bash
+$ go install gotest.tools/gotestsum@latest
+$ $(go env GOPATH)/bin/gotestsum
+```
+
 ### Starting the server
 
 ```bash
