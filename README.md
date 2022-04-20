@@ -5,27 +5,14 @@ A GraphQL API tutorial implemented using Go
 
 ## Getting Started
 
+### Installing the Go dependencies
 ```bash
+$ curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.45.2
+$ go install gotest.tools/gotestsum@latest
 $ go get .
 ```
 
-## Development
-
-### Lint the source code files
-
-```bash
-$ curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.45.2
-$ $(go env GOPATH)/bin/golangci-lint
-```
-
-### Executing the Test Suite
-
-```bash
-$ go install gotest.tools/gotestsum@latest
-$ $(go env GOPATH)/bin/gotestsum
-```
-
-### Starting the server
+### Starting the API server
 
 ```bash
 $ go run server.go
@@ -77,5 +64,51 @@ mutation CreateTodo($input: NewTodo!) {
     "userId": "user-id"
   }
 }
+```
+
+### Starting the web browser client
+
+#### Installing the NodeJS package dependencies
+
+```bash
+$ cd client/
+$ yarn install
+```
+
+#### Starting the web client
+
+```bash
+$ cd client/
+$ yarn run dev
+```
+
+One may then please visit [the JavaScript web client](http://localhost:8081/).
+
+## API Development
+
+### Lint the source code files
+
+```bash
+$ $(go env GOPATH)/bin/golangci-lint run
+```
+
+### Executing the Test Suite
+
+```bash
+$ $(go env GOPATH)/bin/gotestsum
+```
+
+## Web Client Development
+
+### Lint the source code files
+
+```bash
+$ yarn lint
+```
+
+### Executing the Test Suite
+
+```bash
+$ yarn test
 ```
 
