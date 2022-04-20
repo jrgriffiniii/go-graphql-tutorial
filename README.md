@@ -1,6 +1,6 @@
 # go-graphql-tutorial
-
 [![CircleCI](https://circleci.com/gh/jrgriffiniii/go-graphql-tutorial/tree/main.svg?style=svg)](https://circleci.com/gh/jrgriffiniii/go-graphql-tutorial/tree/main)
+
 A GraphQL API tutorial implemented using Go
 
 ## Getting Started
@@ -31,15 +31,15 @@ $ $(go env GOPATH)/bin/gotestsum
 $ go run server.go
 ```
 
-Please visit the [GraphiQL](http://localhost:8080/) interface for querying and submitting mutations to the server API.
+One may then please visit [the GraphiQL web browser interface](http://localhost:8080/) for querying and submitting mutations to the server API.
 
 #### Queries
 
 One example query would be:
 
-```bash
+```graphql
 query {
-    todos {
+  todos {
     id
     text,
     done,
@@ -55,12 +55,12 @@ query {
 
 One example mutation would be:
 
-```bash
+```graphql
 mutation CreateTodo($input: NewTodo!) {
   createTodo(input: $input) {
     id,
     text,
-    user{
+    user {
       id,
       name
     }
@@ -70,7 +70,7 @@ mutation CreateTodo($input: NewTodo!) {
 
 ...with the variables being the following:
 
-```bash
+```json
 {
   "input": {
     "text": "new todo",
