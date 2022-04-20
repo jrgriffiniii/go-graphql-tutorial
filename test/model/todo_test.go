@@ -21,4 +21,12 @@ func TestTodo(t *testing.T) {
 	if todo.ID != "todo-1" {
 		t.Errorf("Todo.ID should be 'todo-1'; received %s", todo.ID)
 	}
+
+	if todo.Text != "test todo item" {
+		t.Errorf("Todo.Text should be 'test todo item'; received %s", todo.Text)
+	}
+
+	if todo.Done != false {
+		t.Error("Todo.Done should be 'false'; received 'true'")
+	}
 }
