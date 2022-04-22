@@ -1,8 +1,11 @@
 ---
-version: 2
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0
 
 jobs:
-  ci:
+  api:
     docker:
       - image: cimg/go:1.18
 
@@ -15,6 +18,8 @@ jobs:
 
     environment:
       TEST_RESULTS: /tmp/test-results
+
+    working_directory: ~/go-graphql-tutorial
 
     steps:
       - checkout
@@ -71,8 +76,41 @@ jobs:
       - store_test_results:
           path: /tmp/test-results
 
+      - persist_to_workspace:
+          root: ~/go-graphql-tutorial
+          paths: .
+
+  client:
+    docker:
+      - image: cimg/node:lts-browsers
+
+    working_directory: ~/go-graphql-tutorial/client
+
+    steps:
+      - checkout:
+          path: ~/go-graphql-tutorial
+
+      - node/install-packages:
+          cache-path: ~/go-graphql-tutorial/client/node_modules
+          pkg-manager: yarn
+      - node/install-yarn:
+          version: '1.22.18'
+
+      - run:
+          command: yarn lint
+          name: Lint the source code files
+
+      - run:
+          command: yarn test
+          name: Execute the test suites
+
+      - persist_to_workspace:
+          root: ~/go-graphql-tutorial/client
+          paths: .
+
 workflows:
   version: 2
   build-workflow:
     jobs:
-      - ci
+      - api
+      - client
