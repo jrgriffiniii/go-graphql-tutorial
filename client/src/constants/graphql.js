@@ -5,11 +5,18 @@ export const TODOS_QUERY = gql`
     todos {
       id
       text,
-      done,
-      user {
-        id,
-        name
-      }
+      done
+    }
+  }
+`
+
+export const CREATE_TODO_MUTATION = gql`
+  mutation CreateTodo($input: NewTodo!) {
+    createTodo(
+      input: $input,
+    ) {
+      id
+      text
     }
   }
 `

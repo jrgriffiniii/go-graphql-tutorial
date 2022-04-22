@@ -26,22 +26,50 @@
     </todo>
 
     <form class="todo-form">
-      <input type="text" name="todo-text" id="todo-text">
+      <input type="text" name="todo-text" id="todo-text" v-model="text" />
 
-      <button type="submit">Add</button>
+      <button type="button" @click="createTodo()">Add</button>
     </form>
   </div>
 </template>
 
 <script>
-import { TODOS_QUERY } from '@/constants/graphql'
+import { TODOS_QUERY, CREATE_TODO_MUTATION } from '@/constants/graphql'
 import Todo from './Todo'
 
 export default {
   name: 'TodoList',
   data () {
     return {
-      todos: []
+      todos: [],
+      text: '',
+      updated: true
+    }
+  },
+  methods: {
+    updateStoreAfterTodoCreated (store, createdTodo) {
+      const data = store.readQuery({
+        query: TODOS_QUERY
+      })
+
+      data.todos.push(createdTodo)
+      store.writeQuery({ query: TODOS_QUERY, data })
+    },
+    createTodo () {
+      this.updated = false
+      const { text } = this.$data
+
+      this.$apollo.mutate({
+        mutation: CREATE_TODO_MUTATION,
+        variables: {
+          input: {
+            text: text
+          }
+        },
+        update: (store, { data: { createTodo } }) => {
+          this.updateStoreAfterTodoCreated(store, createTodo)
+        }
+      })
     }
   },
   components: {

@@ -23,7 +23,6 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 }
 
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-
 	var resultTodos []*model.Todo
 	var dbTodos []todos.Todo
 	dbTodos = todos.GetAll()
