@@ -10,6 +10,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/jrgriffiniii/go-graphql-tutorial/graph"
 	"github.com/jrgriffiniii/go-graphql-tutorial/graph/generated"
+	database "github.com/jrgriffiniii/go-graphql-tutorial/internal/pkg/db/mysql"
 	"github.com/rs/cors"
 )
 
@@ -27,11 +28,11 @@ func main() {
 		port = defaultPort
 	}
 
+	database.InitDB()
+	database.Migrate()
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
 
-	//http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	//http.Handle("/query", srv)
 	router.Handle("/query", srv)
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
