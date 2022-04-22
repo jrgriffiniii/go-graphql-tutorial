@@ -14,6 +14,14 @@ $ go get .
 
 ### Starting the API server
 
+#### Starting the Database
+
+```bash
+$ docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=dbpass -e MYSQL_DATABASE=go_graphql_tutorial -d mysql:latest
+$ docker logs -f mysql # Please wait for the MySQL database to start...
+$ $(go env GOPATH)/bin/migrate -database mysql://root:dbpass@localhost:3306/go_graphql_tutorial -path internal/pkg/db/migrations/mysql up
+```
+
 ```bash
 $ go run server.go
 ```

@@ -5,53 +5,32 @@ package graph
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/jrgriffiniii/go-graphql-tutorial/graph/generated"
 	"github.com/jrgriffiniii/go-graphql-tutorial/graph/model"
+	"github.com/jrgriffiniii/go-graphql-tutorial/internal/todos"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	var user model.User
-	var todo model.Todo
+	var todo todos.Todo
 
-	// This would be replaced by an ORM query to load the model instance
-	user.ID = input.UserID
-
-	todo.User = &user
 	todo.Text = input.Text
-	// One would also assign the model instance ID here
-	todo.ID = "todo-2"
+	todo.Done = false
+	todoID := todo.Save()
 
-	return &todo, nil
+	return &model.Todo{ID: strconv.FormatInt(todoID, 10), Text: todo.Text, Done: todo.Done}, nil
 }
 
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	var todos []*model.Todo
 
-	// This would be replaced by an ORM query to load the model instances
-	fixtureTodo1 := model.Todo{
-		ID:   "1",
-		Text: "test todo item",
-		Done: false,
-		User: &model.User{
-			ID:   "1",
-			Name: "test user",
-		},
+	var resultTodos []*model.Todo
+	var dbTodos []todos.Todo
+	dbTodos = todos.GetAll()
+	for _, todo := range dbTodos {
+		resultTodos = append(resultTodos, &model.Todo{ID: todo.ID, Text: todo.Text, Done: todo.Done})
 	}
-	todos = append(todos, &fixtureTodo1)
-
-	fixtureTodo2 := model.Todo{
-		ID:   "2",
-		Text: "test todo item",
-		Done: false,
-		User: &model.User{
-			ID:   "1",
-			Name: "test user",
-		},
-	}
-	todos = append(todos, &fixtureTodo2)
-
-	return todos, nil
+	return resultTodos, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
