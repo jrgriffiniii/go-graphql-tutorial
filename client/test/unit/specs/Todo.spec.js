@@ -15,6 +15,6 @@ describe('Todo.vue', () => {
 
     const vm = constructed.$mount()
 
-    expect(vm.$el.textContent).toEqual('todo item 1')
+    expect(vm.$el.textContent).toEqual(expect.stringContaining('todo item 1'))
   })
 })

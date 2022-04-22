@@ -29,16 +29,27 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	var todos []*model.Todo
 
 	// This would be replaced by an ORM query to load the model instances
-	fixtureTodo := model.Todo{
-		ID:   "todo-1",
+	fixtureTodo1 := model.Todo{
+		ID:   "1",
 		Text: "test todo item",
 		Done: false,
 		User: &model.User{
-			ID:   "user-1",
+			ID:   "1",
 			Name: "test user",
 		},
 	}
-	todos = append(todos, &fixtureTodo)
+	todos = append(todos, &fixtureTodo1)
+
+	fixtureTodo2 := model.Todo{
+		ID:   "2",
+		Text: "test todo item",
+		Done: false,
+		User: &model.User{
+			ID:   "1",
+			Name: "test user",
+		},
+	}
+	todos = append(todos, &fixtureTodo2)
 
 	return todos, nil
 }
