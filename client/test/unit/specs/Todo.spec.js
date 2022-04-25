@@ -5,7 +5,6 @@ describe('Todo.vue', () => {
   it('should render the text description for the todo item', () => {
     const Constructor = Vue.extend(Todo)
     const constructed = new Constructor({
-
       propsData: {
         todo: {
           text: 'todo item 1'

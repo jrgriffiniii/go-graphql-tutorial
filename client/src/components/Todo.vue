@@ -1,10 +1,16 @@
 <template>
   <div class="todo">
-      <input class="todo__state" type="checkbox" />
+    <input class="todo__state" type="checkbox" />
 
-      <div class="todo__text">{{todo.text}}</div>
+    <div class="todo__text">{{ todo.text }}</div>
 
-    <button @click="deleteTodo()" class="todo__delete" type="button" aria-label="Delete" title="Delete">
+    <button
+      @click="deleteTodo()"
+      class="todo__delete"
+      type="button"
+      aria-label="Delete"
+      title="Delete"
+    >
       <i aria-hidden="true" class="material-icons">delete</i>
     </button>
   </div>
@@ -33,7 +39,6 @@ export default {
 </script>
 
 <style scoped>
-
 .todo {
   display: flex;
   position: relative;
@@ -50,11 +55,10 @@ export default {
 }
 
 .todo__state {
-
 }
 
 .todo__text {
-  color: saturate(#1B4A4E,15%);
+  color: saturate(#1b4a4e, 15%);
   transition: all 0.8s/2 linear 0.8s/2;
   text-align: left;
 
@@ -73,7 +77,7 @@ export default {
   margin: auto;
 
   fill: none;
-  stroke: #27FDC7;
+  stroke: #27fdc7;
   stroke-width: 2;
   stroke-linejoin: round;
   stroke-linecap: round;
@@ -82,11 +86,11 @@ export default {
 .todo__line,
 .todo__box,
 .todo__check {
-  transition: stroke-dashoffset 0.8s cubic-bezier(.9,.0,.5,1);
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.9, 0, 0.5, 1);
 }
 
 .todo__circle {
-  stroke: #27FDC7;
+  stroke: #27fdc7;
   stroke-dasharray: 1 6;
   stroke-width: 0;
 
@@ -109,13 +113,15 @@ export default {
 }
 
 .todo__box {
-  stroke-dasharray: 56.1053, 56.1053; stroke-dashoffset: 0;
+  stroke-dasharray: 56.1053, 56.1053;
+  stroke-dashoffset: 0;
   transition-delay: 0.8s * 0.2;
 }
 
 .todo__check {
-  stroke: #27FDC7;
-  stroke-dasharray: 9.8995, 9.8995; stroke-dashoffset: 9.8995;
+  stroke: #27fdc7;
+  stroke-dasharray: 9.8995, 9.8995;
+  stroke-dashoffset: 9.8995;
   transition-duration: 0.8s * 0.4;
 }
 
@@ -130,24 +136,34 @@ export default {
 }
 
 .todo__state:checked ~ .todo__text {
-  color: #5EBEC1;
+  color: #5ebec1;
   opacity: 0.6;
   text-decoration: line-through;
   transition-delay: 0.8s * 0.2;
 }
 
-.todo__state:checked ~ .todo__icon .todo__box { stroke-dashoffset: 57.1053; transition-delay: 0s; }
-.todo__state:checked ~ .todo__icon .todo__line { stroke-dashoffset: -8; }
-.todo__state:checked ~ .todo__icon .todo__check { stroke-dashoffset: 0; transition-delay: 0.8s * 0.6; }
-.todo__state:checked ~ .todo__icon .todo__circle { animation-name: explode; }
+.todo__state:checked ~ .todo__icon .todo__box {
+  stroke-dashoffset: 57.1053;
+  transition-delay: 0s;
+}
+.todo__state:checked ~ .todo__icon .todo__line {
+  stroke-dashoffset: -8;
+}
+.todo__state:checked ~ .todo__icon .todo__check {
+  stroke-dashoffset: 0;
+  transition-delay: 0.8s * 0.6;
+}
+.todo__state:checked ~ .todo__icon .todo__circle {
+  animation-name: explode;
+}
 
 .todo__delete {
   display: inline-block;
 
-	border:none;
-	background:none;
-	-webkit-appearance:none;
-	cursor:pointer;
-  color: #1B4A4E;
+  border: none;
+  background: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  color: #1b4a4e;
 }
 </style>

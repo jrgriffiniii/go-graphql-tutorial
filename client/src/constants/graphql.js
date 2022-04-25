@@ -12,9 +12,7 @@ export const TODOS_QUERY = gql`
 
 export const CREATE_TODO_MUTATION = gql`
   mutation CreateTodo($input: NewTodo!) {
-    createTodo(
-      input: $input,
-    ) {
+    createTodo(input: $input) {
       id
       text
       done
@@ -24,8 +22,6 @@ export const CREATE_TODO_MUTATION = gql`
 
 export const DELETE_TODO_MUTATION = gql`
   mutation DeleteTodo($id: String!) {
-    deleteTodo(
-      id: $id,
-    )
+    deleteTodo(id: $id)
   }
 `
