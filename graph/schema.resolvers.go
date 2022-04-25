@@ -22,6 +22,12 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 	return &model.Todo{ID: strconv.FormatInt(todoID, 10), Text: todo.Text, Done: todo.Done}, nil
 }
 
+func (r *mutationResolver) DeleteTodo(ctx context.Context, id string) (string, error) {
+	todos.Delete(id)
+
+	return id, nil
+}
+
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	var resultTodos []*model.Todo
 	var dbTodos []todos.Todo

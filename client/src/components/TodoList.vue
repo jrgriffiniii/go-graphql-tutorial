@@ -22,12 +22,13 @@
     <todo
       v-for="todo in todos"
       :key="todo.id"
-      :todo="todo">
+      :todo="todo"
+      @deleteTodo="updateStoreAfterTodoDeleted($event)"
+      >
     </todo>
 
     <form class="todo-form">
       <input type="text" name="todo-text" id="todo-text" v-model="text" />
-
       <button type="button" @click="createTodo()">Add</button>
     </form>
   </div>
@@ -42,11 +43,20 @@ export default {
   data () {
     return {
       todos: [],
-      text: '',
-      updated: true
+      text: ''
     }
   },
   methods: {
+    updateStoreAfterTodoDeleted ({ store, deleteTodo }) {
+      const data = store.readQuery({
+        query: TODOS_QUERY
+      })
+
+      const updated = data.todos.filter((e) => parseInt(e.id) == deleteTodo)
+      data.todos = updated
+
+      store.writeQuery({ query: TODOS_QUERY, data })
+    },
     updateStoreAfterTodoCreated (store, createdTodo) {
       const data = store.readQuery({
         query: TODOS_QUERY
@@ -56,7 +66,6 @@ export default {
       store.writeQuery({ query: TODOS_QUERY, data })
     },
     createTodo () {
-      this.updated = false
       const { text } = this.$data
 
       this.$apollo.mutate({

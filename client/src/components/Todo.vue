@@ -1,48 +1,48 @@
 <template>
-  <label class="todo">
-    <input v-on:click="toggle" class="todo__state" type="checkbox" />
+  <div class="todo">
+      <input class="todo__state" type="checkbox" />
 
-    <svg  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="todo__icon">
-        <linearGradient id="boxGradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="25" y2="25">
-          <stop offset="0%"   stop-color="#27FDC7"/>
-          <stop offset="100%" stop-color="#0FC0F5"/>
-        </linearGradient>
+      <div class="todo__text">{{todo.text}}</div>
 
-        <linearGradient id="lineGradient">
-          <stop offset="0%"    stop-color="#0FC0F5"/>
-          <stop offset="100%"  stop-color="#27FDC7"/>
-        </linearGradient>
-
-        <path class="todo__line" id="todo__line" stroke="url(#lineGradient)" d="M21 12.3h168v0.1z"></path>
-        <path class="todo__box" id="todo__box" stroke="url(#boxGradient)" d="M21 12.7v5c0 1.3-1 2.3-2.3 2.3H8.3C7 20 6 19 6 17.7V7.3C6 6 7 5 8.3 5h10.4C20 5 21 6 21 7.3v5.4"></path>
-        <path class="todo__check" id="todo__check" stroke="url(#boxGradient)" d="M10 13l2 2 5-5"></path>
-        <circle class="todo__circle" id="todo__circle" cx="13.5" cy="12.5" r="10"></circle>
-    </svg>
-
-    <div class="todo__text">{{todo.text}}</div>
-  </label>
+    <button @click="deleteTodo()" class="todo__delete" type="button" aria-label="Delete" title="Delete">
+      <i aria-hidden="true" class="material-icons">delete</i>
+    </button>
+  </div>
 </template>
 
 <script>
+import { DELETE_TODO_MUTATION } from '@/constants/graphql'
+
 export default {
   name: 'Todo',
   props: ['todo'],
   methods: {
-    toggle: function () {
-      console.log('trace')
+    deleteTodo () {
+      this.$apollo.mutate({
+        mutation: DELETE_TODO_MUTATION,
+        variables: {
+          id: this.todo.id
+        },
+        update: (store, { data: { deleteTodo } }) => {
+          this.$emit('deleteTodo', { store, deleteTodo })
+        }
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+
 .todo {
-  display: block;
+  display: flex;
   position: relative;
   padding: 1em 1em 1em 16%;
   margin: 0 auto;
-  cursor: pointer;
   border-bottom: solid 1px #ddd;
+
+  align-items: center;
+  justify-content: space-between;
 }
 
 .todo:last-child {
@@ -50,15 +50,17 @@ export default {
 }
 
 .todo__state {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
+
 }
 
 .todo__text {
   color: saturate(#1B4A4E,15%);
   transition: all 0.8s/2 linear 0.8s/2;
+  text-align: left;
+
+  width: 100%;
+  padding-right: 1.2rem;
+  padding-left: 1.2rem;
 }
 
 .todo__icon {
@@ -127,9 +129,25 @@ export default {
   animation-duration: 0.8s * 0.7;
 }
 
-.todo__state:checked ~ .todo__text { transition-delay: 0s; color: #5EBEC1; opacity: 0.6; }
+.todo__state:checked ~ .todo__text {
+  color: #5EBEC1;
+  opacity: 0.6;
+  text-decoration: line-through;
+  transition-delay: 0.8s * 0.2;
+}
+
 .todo__state:checked ~ .todo__icon .todo__box { stroke-dashoffset: 57.1053; transition-delay: 0s; }
 .todo__state:checked ~ .todo__icon .todo__line { stroke-dashoffset: -8; }
 .todo__state:checked ~ .todo__icon .todo__check { stroke-dashoffset: 0; transition-delay: 0.8s * 0.6; }
 .todo__state:checked ~ .todo__icon .todo__circle { animation-name: explode; }
+
+.todo__delete {
+  display: inline-block;
+
+	border:none;
+	background:none;
+	-webkit-appearance:none;
+	cursor:pointer;
+  color: #1B4A4E;
+}
 </style>

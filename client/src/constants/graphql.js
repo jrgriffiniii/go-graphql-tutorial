@@ -4,7 +4,7 @@ export const TODOS_QUERY = gql`
   query {
     todos {
       id
-      text,
+      text
       done
     }
   }
@@ -17,6 +17,15 @@ export const CREATE_TODO_MUTATION = gql`
     ) {
       id
       text
+      done
     }
+  }
+`
+
+export const DELETE_TODO_MUTATION = gql`
+  mutation DeleteTodo($id: String!) {
+    deleteTodo(
+      id: $id,
+    )
   }
 `
